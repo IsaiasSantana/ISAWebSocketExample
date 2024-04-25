@@ -44,6 +44,10 @@ struct ContentView: View {
             Button("Send Message", action: {
                 handler.socket.send(message: .string("Hello message"))
             })
+
+            Button("Close connection", action: {
+                handler.socket.closeConnection()
+            })
         }
         .padding()
         .onAppear(perform: {
