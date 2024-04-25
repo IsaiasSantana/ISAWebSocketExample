@@ -31,6 +31,10 @@ final class SocketHandler: ISAWebSocketDelegate {
     func socketDidCloseConnection(_ socket: WebSocketClient) {
         print("closed connection")
     }
+
+    func socketDidReceivePong(_ socket: WebSocketClient) {
+        print("Received Pong")
+    }
 }
 
 struct ContentView: View {
@@ -47,6 +51,10 @@ struct ContentView: View {
 
             Button("Close connection", action: {
                 handler.socket.closeConnection()
+            })
+
+            Button("Send Ping", action: {
+                handler.socket.sendPing()
             })
         }
         .padding()
