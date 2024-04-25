@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "isawebsocket",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IsaiasSantana/ISAWebSocket",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b88fa6edb5e66ccea9dd3b78ab92d9d42c7eb4df"
+      }
+    }
+  ],
+  "version" : 2
+}
