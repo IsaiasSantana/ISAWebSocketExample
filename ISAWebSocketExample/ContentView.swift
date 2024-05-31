@@ -7,34 +7,32 @@
 
 import SwiftUI
 import ISAWebSocket
+import Network
 
 final class SocketHandler: ISAWebSocketDelegate {
-    let socket = ISAWebSocket(url: URL(string: "wss://echo.websocket.org/")!)
+
+    let socket = ISAWebSocket(url: URL(string: "wss://api-invest.uatbi.com.br/api/inv-hb-book-ofertas-broadcaster/v1/ws/orders/cogn3")!)
 
     init() {
         socket.delegate = self
     }
 
-    func socket(_ socket: WebSocketClient, didReceiveMessage message: SocketMessage) {
-        switch message {
-        case .string(let string):
-            print("Message \(string)")
-        case .data(let data):
-            print("data receivd \(data)")
-        }
+    func socket(_ socket: WebSocketClient, didReceiveConnectionStatus status: ConnectionStatus) {
+        print("connection status ", status)
     }
 
-    func socket(_ socket: WebSocketClient, didReceiveError error: SocketError) {
-        print("error \(error)")
+    func socket(_ socket: WebSocketClient, didReceiveMessage message: Result<SocketMessage, NWError>) {
+        print("message response ", message)
     }
 
-    func socketDidCloseConnection(_ socket: WebSocketClient) {
-        print("closed connection")
+    func socket(_ socket: WebSocketClient, sendMessageDidFailedWithError error: NWError) {
+        print("failed sent message ", error)
     }
 
-    func socketDidReceivePong(_ socket: WebSocketClient) {
-        print("Received Pong")
+    func socket(_ socket: WebSocketClient, didReceivePingPongStatus status: PingPongStatus) {
+        print("ping/pong status ", status)
     }
+
 }
 
 struct ContentView: View {
@@ -46,7 +44,7 @@ struct ContentView: View {
                 .imageScale(.large)
                 .foregroundStyle(.tint)
             Button("Send Message", action: {
-                handler.socket.send(message: .string("Hello message"))
+                handler.socket.send(message: .data(Data([1,3])))
             })
 
             Button("Close connection", action: {
